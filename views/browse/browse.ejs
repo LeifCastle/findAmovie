@@ -1,1 +1,37 @@
-<p>browse</p>
+<link rel="stylesheet" href="/css/browse.css">
+<h3>Search by title</h3>
+<form method="POST" action="/browse">
+        <label for="searchType">Search by -> </label>
+        <select
+          id="searchType"
+          name="searchType"
+          required
+        >
+          <option selected disabled>Search Type</option>
+          <option value="title">Title</option>
+        </select>
+      </div>
+      <div id="search">
+        <label for="item">Search for: </label>
+        <input
+          type="paramater"
+          class="input"
+          id="paramater"
+          name="paramater"
+          placeholder="type value"
+          required
+        />
+      </div>
+        <button type="submit" id="serachSubmit">Search</button>
+    </div>
+  </form>
+
+<% if (searchResult) { %>
+  <div id="searchResults">
+    <% searchResult.forEach(result => { %>
+      <div id="searchResults">
+        <img class="moviePoster" src="https://image.tmdb.org/t/p/original/<%=result.poster_path%>" alt="">
+      </div>
+    <% }); %>
+  </div>
+<% } %>

@@ -1,0 +1,27 @@
+body {
+  background-color: rgb(223, 164, 93);
+}
+#searchResults {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5vw;
+}
+
+.movieCard {
+  width: clamp(300px, 10vw, 600px);
+  height: clamp(200px, 6vh, 400px);
+  background-color: darkgrey;
+  border-radius: 4px;
+  /*This should be changed based on device size*/
+}
+
+#movieCardBody {
+  display: flex;
+}
+.elipsis {
+  font-weight: bold;
+}
+
+.moviePoster {
+  width: 100px;
+}
