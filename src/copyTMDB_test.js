@@ -2,7 +2,6 @@ const fs = require("fs");
 require("dotenv").config();
 const axios = require("axios");
 const movieIds = require("./processedDailyExports.json");
-const { json } = require("sequelize");
 
 const apiKey = "f95c55e2a9a5625ec1d3b5c42e143840"; //process.env.TMDB_API_KEY;
 const baseURL = "https://api.themoviedb.org/3/movie/";
@@ -24,13 +23,22 @@ fs.writeFile(outputFile, "", "utf8", (error) => {
   }
 });
 
+//Call fetchInterval once to get started
+fetchInterval();
+
 //Fetch movies at a rate of 45 movies per second
-let fetchInterval = setInterval(async () => {
-  const movie = await fetchMovieDetails(movieIds[index].id);
+function fetchInterval() {
+  setTimeout(() => {
+    fetchMovies();
+  }, 23);
+}
+
+async function fetchMovies() {
+  const movie = await fetchMovieDetails(index);
   movieBatch.push(movie);
-  index++;
   console.log(`${index} - Movie Fetched: ${movieIds[index].title}`);
-  if (index % 10000 === 0) {
+  index++;
+  if (index % 10 === 0) {
     console.log("Batch Full");
     try {
       parsedMovieBatch = await parseMovieBatch(movieBatch);
@@ -43,10 +51,10 @@ let fetchInterval = setInterval(async () => {
     movieBatch = [];
     batchNumber++;
   }
-  if (index === movieIds.length) {
-    clearInterval(fetchInterval);
+  if (index <= movieIds.length) {
+    fetchInterval();
   }
-}, 23);
+}
 
 //Makes an axios request to TMDB for a specific movie by it's id
 async function fetchMovieDetails(index) {
@@ -70,6 +78,7 @@ function parseMovieBatch(movieBatch) {
           belongs_to_collection,
           homepage,
           original_title,
+          original_language,
           production_companies,
           production_countries,
           tagline,
@@ -97,11 +106,6 @@ function parseMovieBatch(movieBatch) {
             rest["video_name"] = videos.results[i].name;
             break;
           }
-        }
-        //backdrops left out for now (images.backdrops[i].file_path)
-        //Only one poster for now, the first one sequentially
-        if (images.posters[0]) {
-          rest["image_poster"] = images.posters[0].file_path;
         }
         return rest;
       });

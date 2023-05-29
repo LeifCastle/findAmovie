@@ -4,7 +4,7 @@
     "host": "127.0.0.1",
     "dialect": "postgres",
     "username": "leif",
-    "passowrd": "123"
+    "password": "123"
   },
   "test": {
     "database": "userapp_test",
