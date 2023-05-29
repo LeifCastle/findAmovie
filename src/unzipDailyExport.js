@@ -1,5 +1,4 @@
 //*** This file unzips the daily Id Export file from The Movie Databse ***/
-const axios = require("axios");
 const fs = require("fs");
 const zlib = require("zlib");
 
@@ -22,6 +21,4 @@ unzipStream
   })
   .on("finish", () => {
     console.log("Unzipping completed.");
-    // Now you can proceed with parsing the unzipped JSON file
-    parseFile(outputFilePath);
   });
