@@ -3,7 +3,7 @@ const router = express.Router();
 const axios = require("axios");
 
 router.get("/", function (req, res) {
-  return res.render("browse/browse", { searchResult: null });
+  return res.render("snagEngine/snagEngine", { searchResult: null });
 });
 
 router.post("/", function (req, res) {
@@ -17,7 +17,9 @@ router.post("/", function (req, res) {
     )
     .then((response) => {
       //console.log(response.data.results); //response.data.results is an array of objects
-      res.render("browse/browse", { searchResult: response.data.results });
+      res.render("snagEngine/snagEngine.js", {
+        searchResult: response.data.results,
+      });
     })
     .catch((err) => console.log(err));
 });

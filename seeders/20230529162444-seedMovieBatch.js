@@ -8,7 +8,7 @@ const apiKey = "f95c55e2a9a5625ec1d3b5c42e143840"; //process.env.TMDB_API_KEY;
 const baseURL = "https://api.themoviedb.org/3/movie/";
 const append = "append_to_response=videos,images";
 
-let index = 0;
+let index = 511000;
 let movieBatch = [];
 let batchNumber = 1;
 let parsedMovieBatch;
@@ -31,14 +31,14 @@ module.exports = {
     while (index < movieIds.length) {
       //Fetch Movies
       while (movieBatch.length < 1000) {
-        await fetchDelay();
-        if (delayMet === true) {
-          const movie = await fetchMovieDetails(index);
+        //await fetchDelay();
+        const movie = await fetchMovieDetails(index);
+        setTimeout(async () => {
           movieBatch.push(movie);
           console.log(`${index} - Movie Fetched: ${movieIds[index].title}`);
           index++;
           delayMet = false;
-        }
+        }, 20);
       }
       //Parse Movies
       try {

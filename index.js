@@ -16,9 +16,9 @@ app.use(express.static(__dirname + "/public"));
 app.get("/", function (req, res) {
   res.render("index.ejs");
 });
-app.use("/filters", require("./controllers/filters"));
-app.use("/survey", require("./controllers/survey.js"));
-app.use("/browse", require("./controllers/browse.js"));
+
+app.use("/questionaire", require("./controllers/questionaire.js"));
+app.use("/snagEngine", require("./controllers/snagEngine.js"));
 
 //------Setup
 //Server
