@@ -1,0 +1,58 @@
+html,
+body {
+  text-align: center;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#header {
+  display: flex;
+}
+
+h3 {
+  flex-basis: 70%;
+}
+button {
+  flex-basis: 15%;
+}
+
+#progressBar {
+  display: flex;
+}
+
+.progress {
+  height: 20px;
+  width: 16vw;
+  background-color: rgb(114, 109, 109);
+}
+
+#questionnaire {
+  width: 80vw;
+  height: 60vh;
+  background-color: rgb(211, 226, 195);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.choice {
+  width: 120px;
+  height: 30px;
+  background-color: bisque;
+  border-radius: 3px;
+}

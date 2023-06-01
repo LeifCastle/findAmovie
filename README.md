@@ -15,3 +15,9 @@ sequelize model:create --name movie --attributes imdb_id:integer,title:string,ov
 
 The homepage begins the user's process of selecting a movie, they are given a choice to either take a questionaire first, or immedietly jump into filtering movies
 ![image info](./public/images/Home%20Page%20--%20Design%202.png)
+
+### Questionaire Page
+
+The user begins the questionaire, they have five questions and their answer determines the next question. Questions are housed in a card template aka a public html file (secuity issue?). A switch case based on choices generates an AJAX fetch request to get the appropriate template.
+![image info](./public/images/Questionaire%Cards.png)
+![image info](./public/images/Questionaire%Page.png)
