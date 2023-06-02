@@ -1,18 +1,23 @@
 <link rel="stylesheet" href="/css/questionaire.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="../../scripts/questionaire.js"></script>
+<script src="
+https://cdn.jsdelivr.net/npm/ejs@3.1.9/ejs.min.js
+"></script>
+<script src="../../scripts/questionaire.js" type="module"></script>
 <div id="questionnaire">
   <div id="header">
-    <button id="back">--Back</button>
+    <button id="back" hidden="hidden">--Back</button>
     <h3 id="questionTitle">Audience</h3>
     <button id="skip">Skip--</button>
   </div>
   <div id="cardParent">
-    <div class="card">
-      <button id="me" class="choice">Just Me</button>
-      <button id="couples" class="choice">Gf/Bf/Couples</button>
-      <button id="friends" class="choice">Friends</button>
-      <button id="family" class="choice">Family</button>
+    <div class="audience card">
+      <div class="pick1 1">
+        <button id="zme" class="choice 1">Just Me</button>
+        <button id="zcouples" class="choice 1">Gf/Bf/Couples</button>
+        <button id="zfriends" class="choice 1">Friends</button>
+        <button id="zfamily" class="choice 1">Family</button>
+      </div>
     </div>
   </div>
   <div id="progressBar">

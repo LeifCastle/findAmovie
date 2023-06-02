@@ -19,5 +19,14 @@ The homepage begins the user's process of selecting a movie, they are given a ch
 ### Questionaire Page
 
 The user begins the questionaire, they have five questions and their answer determines the next question. Questions are housed in a card template aka a public html file (secuity issue?). A switch case based on choices generates an AJAX fetch request to get the appropriate template.
-![image info](./public/images/Questionaire%Cards.png)
-![image info](./public/images/Questionaire%Page.png)
+![image info](./public/images/Questionaire_Cards.png)
+![image info](./public/images/Questionaire_Page.png)
+
+The goal is to narrow down results to movies that match three or less genres within a certain time frame. The user can also obtain adult and animation filters.
+
+How the ejs template class system work is the button's second class is how many total choices the user must make before progressing to the next page, and the button's parent div is how many choices the user must make in that specific div. Thus the only way to progress to the next page is to make every choice in every div
+
+````<div class="pick2 2">
+    <button id="m1A" class="choice 4"><%=m1A%></button>
+  </div>```
+````
