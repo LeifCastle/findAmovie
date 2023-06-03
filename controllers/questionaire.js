@@ -5,8 +5,12 @@ router.get("/", (req, res) => {
   res.render("questionaire/questionaire");
 });
 
-// router.post("/", (req, res) => {
-//   res.render("questionaire/results.ejs", response.data);
-// });
+router.get("/results", (req, res) => {
+  res.render("questionaire/results.ejs");
+});
+
+router.post("/", (req, res) => {
+  res.render("questionaire/results.ejs", response.data);
+});
 
 module.exports = router;

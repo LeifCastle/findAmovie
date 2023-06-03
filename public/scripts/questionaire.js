@@ -26,15 +26,13 @@ document.addEventListener("DOMContentLoaded", () => {
   let tempGenres = {};
   let tempMGenres = {};
   let keep = [];
-  let finalGenres = [];
-
-  let selections = 0;
-  let selectionReq = 0;
 
   //-----Query Selectors
   let back = document.querySelector("#back");
   let card = document.querySelector("#cardParent");
   let questionTitle = document.querySelector("#questionTitle");
+  let selections = 0;
+  let selectionReq = 0;
 
   //-----Event Listeners
   $(document).on("click", ".choice", (event) => {
@@ -51,8 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (picked === 0) {
       let elements = event.target.parentNode.querySelectorAll("*");
       elements.forEach((element) => {
-        if (element.classList != "done")
-          element.setAttribute("disabled", "disabled");
+        element.setAttribute("disabled", "disabled");
       });
     }
     let idArray = event.target.id.split("");
@@ -60,7 +57,6 @@ document.addEventListener("DOMContentLoaded", () => {
     //Run the results of a specific selection choice
     runChoice(alter, id.join("").toLowerCase());
     //If all required selections are made go to next card
-    console.log(selections + " " + selectionReq);
     if (selections === selectionReq) {
       progress++;
       checkProgress();
@@ -79,14 +75,14 @@ document.addEventListener("DOMContentLoaded", () => {
     progress--;
     checkProgress();
   });
-  //--Romance Submit Button
+
   $(document).on("click", ".done", () => {
     finishQuestionaire();
   });
 
   //------Card Choice Logic
   function runCard(currentCard, choice) {
-    //console.log(currentCard + " " + choice);
+    console.log(currentCard + " " + choice);
     switch (currentCard) {
       case "audience":
         switch (choice) {
@@ -140,10 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
         break;
-      case "f":
-        finalGenres.push(choice);
-        console.log(finalGenres);
-        break;
       default:
     }
   }
@@ -170,6 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //update to have certain parameters such as always include certain ones like sci-fi or action in good pick
   function genreResolve(choice) {
+    console.log("i Ran");
     let genreKeys = Object.keys(genres);
     let romanceKeys = [
       "mystery",
@@ -209,25 +202,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function finishQuestionaire() {
-    // updateCard("finished");
-    // fetch("../controllers/questionaire.js", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(finalGenres),
-    // })
-    //   .then((response) => response.json())
-    //   .then((responseData) => {
-    //     // Handle the response data
-    //     console.log(responseData);
-    //   })
-    //   .catch((error) => {
-    //     // Handle any errors
-    //     console.error(error);
-    //   });
-    // setTimeout(() => {
-    //   window.location.href = `/questionaire/results`;
-    // }, 1000);
+    updateCard("finished");
+    fetch("../controllers/questionaire.js", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(finalGenres),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        // Handle the response data
+        console.log(responseData);
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.error(error);
+      });
   }
 });
