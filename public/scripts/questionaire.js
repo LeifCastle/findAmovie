@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let tempGenres = {};
   let tempMGenres = {};
   let keep = [];
+  let finalGenres = [];
 
   //-----Query Selectors
   let back = document.querySelector("#back");
@@ -112,6 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         break;
       case "romancePairing":
+        console.log("Final Genres: " + finalGenres);
         finishQuestionaire();
         break;
     }
@@ -136,7 +138,9 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         }
         break;
-      default:
+      case "f":
+        finalGenres.push(choice);
+        break;
     }
   }
 
@@ -202,22 +206,25 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function finishQuestionaire() {
+    console.log("Final Genres: " + finalGenres);
     updateCard("finished");
-    fetch("../controllers/questionaire.js", {
+    fetch("/questionaire/results", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(finalGenres),
     })
-      .then((response) => response.json())
-      .then((responseData) => {
-        // Handle the response data
-        console.log(responseData);
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error: " + response.status);
+        }
+        return response.text();
       })
       .catch((error) => {
-        // Handle any errors
         console.error(error);
+        // Handle any errors that occurred during the request
       });
+    window.location.href = "/questionaire/results";
   }
 });
