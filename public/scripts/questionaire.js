@@ -23,10 +23,14 @@ document.addEventListener("DOMContentLoaded", () => {
     war: "War",
     western: "Western",
   };
+  let animationBool = false;
   let tempGenres = {};
   let tempMGenres = {};
   let keep = [];
   let finalGenres = [];
+  let mainPath = true;
+
+  let releaseYear = 10;
 
   //-----Query Selectors
   let back = document.querySelector("#back");
@@ -77,8 +81,15 @@ document.addEventListener("DOMContentLoaded", () => {
     checkProgress();
   });
 
-  $(document).on("click", ".done", () => {
-    finishQuestionaire();
+  $(document).on("input", ".range", (event) => {
+    var valueText = document.querySelector(".value-text");
+    valueText.textContent = event.currentTarget.value;
+    releaseYear = event.currentTarget.value;
+  });
+
+  $(document).on("click", ".done", (event) => {
+    runCard(event.target.id);
+    console.log("eventtttt" + event.target.id);
   });
 
   //------Card Choice Logic
@@ -106,6 +117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         switch (choice) {
           case "romance":
             updateCard("romancePairing");
+            mainPath = false;
             break;
           default:
             updateCard("ReleaseYears");
@@ -113,10 +125,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         break;
       case "romancePairing":
-        console.log("Final Genres: " + finalGenres);
-        finishQuestionaire();
+        updateCard("animation");
+        break;
+      case "releaseYears":
+        if (mainPath) {
+          updateCard("GenreChoice");
+        } else {
+          finishQuestionaire();
+        }
+
+        break;
+      case "animation":
+        updateCard("ReleaseYears");
         break;
     }
+    console.log("Final Genres: " + finalGenres);
   }
   //-----Selection Choice Logic
   function runChoice(alter, choice) {
@@ -124,16 +147,23 @@ document.addEventListener("DOMContentLoaded", () => {
       case "r":
         delete genres[choice];
         break;
+      case "m":
+        finalGenres.push(choice);
+        break;
       case "a":
-        keep.push(choice);
-        if (keep.length > 1) {
-          for (let z = 5; z < 9; z++) {
-            if (
-              tempGenres[`Genre${z}`] != keep[0] &&
-              tempGenres[`Genre${z}`] != keep[1]
-            ) {
-              //need to update to include history for back button
-              delete genres[tempGenres[`Genre${z}`]];
+        if (choice === "animation") {
+          animationBool = true;
+        } else {
+          keep.push(choice);
+          if (keep.length > 1) {
+            for (let z = 5; z < 9; z++) {
+              if (
+                tempGenres[`Genre${z}`] != keep[0] &&
+                tempGenres[`Genre${z}`] != keep[1]
+              ) {
+                //need to update to include history for back button
+                delete genres[tempGenres[`Genre${z}`]];
+              }
             }
           }
         }
@@ -166,7 +196,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //update to have certain parameters such as always include certain ones like sci-fi or action in good pick
   function genreResolve(choice) {
-    console.log("i Ran");
     let genreKeys = Object.keys(genres);
     let romanceKeys = [
       "mystery",
@@ -207,13 +236,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function finishQuestionaire() {
     console.log("Final Genres: " + finalGenres);
+    console.log("Max Release Years: " + releaseYear);
+    let questionaireResults = {
+      genres: finalGenres,
+      years: releaseYear,
+      animation: animationBool,
+    };
     updateCard("finished");
     fetch("/questionaire/results", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(finalGenres),
+      body: JSON.stringify(questionaireResults),
     })
       .then((response) => {
         if (!response.ok) {

@@ -1,0 +1,35 @@
+#results {
+  width: 100vw;
+  height: 80vh;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.movieCard {
+  width: clamp(300px, 10vw, 600px);
+  height: clamp(200px, 6vh, 400px);
+  background-color: darkgrey;
+  border-radius: 4px;
+  /*This should be changed based on device size*/
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+#movieCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.elipsis {
+  font-weight: bold;
+}
+
+.moviePoster {
+  width: 120px;
+}
+
+#vert {
+  font-weight: bold;
+}

@@ -30,3 +30,8 @@ How the ejs template class system work is the button's second class is how many 
     <button id="m1A" class="choice 4"><%=m1A%></button>
   </div>```
 ````
+
+### Questionaire Results Page
+
+Displays survey results
+![image info](./public/images/ResultPageDesign1.png)

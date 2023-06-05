@@ -26,7 +26,7 @@ app.use("/snagEngine", require("./controllers/snagEngine.js"));
 
 //------Setup
 //Server
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 7000;
 const server = app.listen(PORT, () => {
   console.log(`MovieSnag is runniong on port ${PORT}`);
 });
