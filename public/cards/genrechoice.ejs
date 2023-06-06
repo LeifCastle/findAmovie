@@ -1,17 +1,34 @@
 <div class="genreChoice card">
-  <p>Select the two genre's you're least intrested in watching</p>
-  <div class="pick2 2">
-    <button id="r<%=Genre1%>" class="choice 4"><%=Genre1%></button>
-    <button id="r<%=Genre2%>" class="choice 4"><%=Genre2%></button>
-    <button id="r<%=Genre3%>" class="choice 4"><%=Genre3%></button>
-    <button id="r<%=Genre4%>" class="choice 4"><%=Genre4%></button>
+  <p>Select the genre's (if any) you're not intrested in watching</p>
+  <div class="pick4">
+    <button id="r<%=tempGenres.Genre1%>" class="choice">
+      <%=tempGenres.Genre1%>
+    </button>
+    <button id="r<%=tempGenres.Genre2%>" class="choice">
+      <%=tempGenres.Genre2%>
+    </button>
+    <button id="r<%=tempGenres.Genre3%>" class="choice">
+      <%=tempGenres.Genre3%>
+    </button>
+    <button id="r<%=tempGenres.Genre4%>" class="choice">
+      <%=tempGenres.Genre4%>
+    </button>
   </div>
   <hr />
-  <p>Select the two genre's you're most intrested in watching</p>
-  <div class="pick2 2">
-    <button id="a<%=Genre5%>" class="choice 4"><%=Genre5%></button>
-    <button id="a<%=Genre6%>" class="choice 4"><%=Genre6%></button>
-    <button id="a<%=Genre7%>" class="choice 4"><%=Genre7%></button>
-    <button id="a<%=Genre8%>" class="choice 4"><%=Genre8%></button>
+  <p>Select the genre's (if any) you're intrested in watching</p>
+  <div class="pick4">
+    <button id="a<%=tempGenres.Genre5%>" class="choice">
+      <%=tempGenres.Genre5%>
+    </button>
+    <button id="a<%=tempGenres.Genre6%>" class="choice">
+      <%=tempGenres.Genre6%>
+    </button>
+    <button id="a<%=tempGenres.Genre7%>" class="choice">
+      <%=tempGenres.Genre7%>
+    </button>
+    <button id="a<%=tempGenres.Genre8%>" class="choice">
+      <%=tempGenres.Genre8%>
+    </button>
   </div>
+  <button id="genreChoice" class="done">Next</button>
 </div>

@@ -8,13 +8,13 @@ document.addEventListener("DOMContentLoaded", () => {
     animation: "Animation",
     comedy: "Comedy",
     crime: "Crime",
-    documentary: "Documentary",
+    //documentary: "Documentary",
     drama: "Drama",
     family: "Family",
     fantasy: "Fantasy",
     history: "History",
     horror: "Horror",
-    music: "Music",
+    //music: "Music",
     mystery: "Mystery",
     romance: "Romance",
     scifi: "Science Fiction",
@@ -25,10 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
   };
   let animationBool = false;
   let tempGenres = {};
-  let tempMGenres = {};
   let keep = [];
   let finalGenres = [];
   let mainPath = true;
+  let cardCount = 0;
 
   let releaseYear = 10;
 
@@ -89,12 +89,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   $(document).on("click", ".done", (event) => {
     runCard(event.target.id);
-    console.log("eventtttt" + event.target.id);
   });
 
   //------Card Choice Logic
   function runCard(currentCard, choice) {
-    console.log(currentCard + " " + choice);
+    //console.log(currentCard + " " + choice);
     switch (currentCard) {
       case "audience":
         switch (choice) {
@@ -111,16 +110,33 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         break;
       case "genreChoice":
-        updateCard("ReleaseYears");
+        //console.log("keep: " + keep);
+        for (let z = 5; z < 9; z++) {
+          if (
+            (keep[0] ? tempGenres[`Genre${z}`] != keep[0] : true) &&
+            (keep[1] ? tempGenres[`Genre${z}`] != keep[1] : true) &&
+            (keep[2] ? tempGenres[`Genre${z}`] != keep[2] : true) &&
+            (keep[3] ? tempGenres[`Genre${z}`] != keep[3] : true)
+          ) {
+            //need to update to include history for back button
+            delete genres[tempGenres[`Genre${z}`].toLowerCase()];
+          }
+        }
+        cardCount++;
+        if (cardCount === 1) {
+          updateCard("ReleaseYears");
+        } else {
+          updateCard("finalThree");
+        }
         break;
       case "romancePreferences":
         switch (choice) {
-          case "romance":
+          case "justromance":
             updateCard("romancePairing");
             mainPath = false;
             break;
           default:
-            updateCard("ReleaseYears");
+            updateCard("GenreChoice");
             break;
         }
         break;
@@ -138,8 +154,9 @@ document.addEventListener("DOMContentLoaded", () => {
       case "animation":
         updateCard("ReleaseYears");
         break;
+      case "finalThree":
+        finishQuestionaire();
     }
-    console.log("Final Genres: " + finalGenres);
   }
   //-----Selection Choice Logic
   function runChoice(alter, choice) {
@@ -148,46 +165,50 @@ document.addEventListener("DOMContentLoaded", () => {
         delete genres[choice];
         break;
       case "m":
+        delete genres[choice];
         finalGenres.push(choice);
         break;
       case "a":
-        if (choice === "animation") {
-          animationBool = true;
-        } else {
-          keep.push(choice);
-          if (keep.length > 1) {
-            for (let z = 5; z < 9; z++) {
-              if (
-                tempGenres[`Genre${z}`] != keep[0] &&
-                tempGenres[`Genre${z}`] != keep[1]
-              ) {
-                //need to update to include history for back button
-                delete genres[tempGenres[`Genre${z}`]];
-              }
-            }
-          }
-        }
+        keep.push(choice);
+        break;
+
+      case "t":
+        animationBool = true;
         break;
       case "f":
-        finalGenres.push(choice);
+        delete genres[choice];
+        let addGenre = true;
+        finalGenres.forEach((genre) => {
+          if (genre === choice) {
+            addGenre = false;
+          }
+        });
+        if (addGenre) {
+          finalGenres.push(choice);
+        }
         break;
+    }
+    console.log("Final Genres: " + finalGenres);
+    console.log("Genres: ");
+    for (let key in genres) {
+      console.log(key);
     }
   }
 
   //-----Card Rendering
-  function updateCard(choice) {
+  function updateCard(newCard) {
     selections = 0; //reset multiple choice selection count
-    cardHistory.push(choice.toLowerCase()); //Update card history
-    let route = `./cards/${choice.toLowerCase()}.ejs`;
+    cardHistory.push(newCard.toLowerCase()); //Update card history
+    let route = `./cards/${newCard.toLowerCase()}.ejs`;
     fetch(route)
       .then(function (response) {
+        genreResolve(newCard);
         return response.text();
       })
       .then(function (template) {
-        genreResolve(choice);
-        let renderedHTML = ejs.render(template, tempGenres);
+        let renderedHTML = ejs.render(template, { tempGenres: tempGenres });
         card.innerHTML = renderedHTML;
-        questionTitle.textContent = choice;
+        questionTitle.textContent = newCard;
       })
       .catch(function (err) {
         console.log("Failed to fetch page: ", err);
@@ -195,7 +216,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   //update to have certain parameters such as always include certain ones like sci-fi or action in good pick
-  function genreResolve(choice) {
+  function genreResolve(newCard) {
+    tempGenres = {};
     let genreKeys = Object.keys(genres);
     let romanceKeys = [
       "mystery",
@@ -205,7 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
       "thriller",
       "horror",
     ];
-    switch (choice) {
+    switch (newCard) {
       case "GenreChoice":
         for (let i = 1; i < 10; i++) {
           let randomIndex = Math.floor(Math.random() * genreKeys.length);
@@ -214,7 +236,16 @@ document.addEventListener("DOMContentLoaded", () => {
           tempGenres[`Genre${i}`] = randomGenre;
         }
         break;
-      case "romance":
+      case "finalThree":
+        let length = genreKeys.length;
+        for (let i = 0; i < length; i++) {
+          let randomIndex = Math.floor(Math.random() * genreKeys.length);
+          let randomGenre = genreKeys[randomIndex];
+          genreKeys.splice(randomIndex, 1);
+          tempGenres[`Genre${i}`] = randomGenre;
+        }
+        break;
+      case "romancePairing":
         for (let i = 1; i < 5; i++) {
           let randomIndex = Math.floor(Math.random() * romanceKeys.length);
           let randomGenre = romanceKeys[randomIndex];

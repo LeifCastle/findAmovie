@@ -1,0 +1,10 @@
+<div class="finalThree card">
+  <p>Select the three genre's you're most intrested in watching</p>
+  <div class="pick2 3">
+    <% for( let key in tempGenres) { %>
+    <button id="f<%=tempGenres[key]%>" class="choice 3">
+      <%=tempGenres[key]%>
+    </button>
+    <% } %>
+  </div>
+</div>
