@@ -5,7 +5,6 @@ const Sequelize = require("sequelize");
 const { Op } = require("sequelize");
 
 let requestParams = {};
-let filteredMovies;
 
 router.get("/", (req, res) => {
   res.render("questionaire/questionaire");
@@ -21,7 +20,21 @@ router.get("/results", async (req, res) => {
   while (requestParams.genres.length < 4) {
     requestParams.genres.push("");
   }
-  filteredMovies = await getMovies();
+  let seenMovieArray = [];
+  async function getSeenMovies() {
+    //If the user is logged in get the movies they've seen
+    if (res.locals.currentUser) {
+      const thisUser = await user.findOne({
+        where: { username: res.locals.currentUser.username },
+      });
+      const movies = await thisUser.getMovies();
+      movies.forEach((movie) => {
+        seenMovieArray.push(movie.title);
+      });
+    }
+  }
+  await getSeenMovies();
+  const filteredMovies = await getMovies(seenMovieArray);
   //console.log(filteredMovies.slice(1, 100));
   res.render("questionaire/results.ejs", {
     data: filteredMovies.slice(1, 100),
@@ -86,7 +99,8 @@ const sequelize = new Sequelize("moviesnag", "leif", "123", {
   dialect: "postgres",
 });
 
-async function getMovies() {
+async function getMovies(seenMovieArray) {
+  console.log("SEEEDGEWG", seenMovieArray);
   foundMovies = await movie.findAll({
     where: {
       [Op.or]: [
@@ -111,10 +125,18 @@ async function getMovies() {
         ), // Year condition
         sequelize.literal(
           `CASE WHEN ${requestParams.animation} THEN genre_1 = 'Animation' ELSE TRUE END`
-        ),
+        ), //Animation condition
         sequelize.literal(
           `CASE WHEN ${!requestParams.animation} THEN genre_1 != 'Animation' ELSE TRUE END`
         ), //Animation condition
+        sequelize.where(
+          sequelize.literal(
+            seenMovieArray.length > 0
+              ? `title NOT IN ('${seenMovieArray.join("','")}')`
+              : "TRUE"
+          ),
+          true
+        ), //Seen Movies condition
       ],
     },
     order: [["popularity", "DESC"]],
