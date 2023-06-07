@@ -1,3 +1,21 @@
-html {
+main {
   background-color: rgba(167, 175, 208, 1);
+  height: 80vh;
+  display: block;
+}
+#seenMovies {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.moviePoster {
+  width: 120px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+.seenMovieCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

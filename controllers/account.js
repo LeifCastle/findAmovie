@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const passport = require("../config/ppConfig");
-const { user } = require("../models");
+const { user, userSeenMovies } = require("../models");
 const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/login", function (req, res) {
@@ -56,9 +56,27 @@ router.post(
   })
 );
 
-router.get("/profile", isLoggedIn, (req, res) => {
-  const { firstName, lastName, username } = req.user.get();
-  res.render("profile", { firstName, lastName, username });
+router.get("/profile", isLoggedIn, async (req, res) => {
+  let seenMovies = [];
+  await user
+    .findOne({ where: { username: res.locals.currentUser.username } })
+    .then((user) => {
+      user
+        .getMovies()
+        .then((movies) => {
+          movies.forEach((movie) => {
+            console.log("Title: ", movie.title);
+            seenMovies.push({
+              title: movie.title,
+              posterImage: `https://image.tmdb.org/t/p/original/${movie.poster_path}`,
+            });
+          });
+        })
+        .then(() => {
+          const { firstName, lastName, username } = req.user.get();
+          res.render("profile", { firstName, lastName, username, seenMovies });
+        });
+    });
 });
 
 router.get("/:input", function (req, res) {
