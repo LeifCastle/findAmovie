@@ -5,11 +5,11 @@ const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const axios = require("axios");
 const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
 
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("./config/ppConfig");
-const isLoggedIn = require("./middleware/isLoggedIn");
 const app = express();
 
 SECRET_SESSION = process.env.SECRET_SESSION;
@@ -17,6 +17,7 @@ console.log(">>>>>>>>>>>>>>>>", SECRET_SESSION);
 
 //Express Setup
 app.set("view engine", "ejs");
+app.use(methodOverride("_method"));
 app.use(expressLayouts);
 app.use(express.static(__dirname + "/public"));
 
@@ -54,11 +55,6 @@ app.get("/", function (req, res) {
 app.use("/questionaire", require("./controllers/questionaire.js"));
 app.use("/snagEngine", require("./controllers/snagEngine.js"));
 app.use("/account", require("./controllers/account.js"));
-
-app.get("/profile", isLoggedIn, (req, res) => {
-  const { id, username, email } = req.user.get();
-  res.render("profile", { id, username, email });
-});
 
 app.get("/:input", function (req, res) {
   res.render("404", { badLink: req.params.input });

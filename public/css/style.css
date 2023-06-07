@@ -101,7 +101,8 @@ body {
   text-decoration: none; /* no underline */
 }
 
-#login {
+#login,
+#profile {
   display: flex;
   align-items: center;
   justify-content: center;

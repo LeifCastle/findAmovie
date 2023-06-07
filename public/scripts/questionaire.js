@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
     romance: "Romance",
     scifi: "Science Fiction",
     thriller: "Thriller",
-    tvMovies: "TV Movie",
-    war: "War",
-    western: "Western",
+    //tvMovies: "TV Movie",
+    //war: "War",
+    //western: "Western",
   };
   let animationBool = false;
   let tempGenres = {};
@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let finalGenres = [];
   let mainPath = true;
   let cardCount = 0;
+  let genreF;
 
   let releaseYear = 10;
 
@@ -176,15 +177,23 @@ document.addEventListener("DOMContentLoaded", () => {
         animationBool = true;
         break;
       case "f":
-        delete genres[choice];
+        if (choice === "justromance") {
+          genreF = "romance";
+        } else {
+          genreF = choice;
+        }
+        delete genres[genreF];
         let addGenre = true;
         finalGenres.forEach((genre) => {
-          if (genre === choice) {
+          if (genre === genreF) {
             addGenre = false;
           }
         });
         if (addGenre) {
-          finalGenres.push(choice);
+          let [firstLetter, ...rest] = genreF.split("");
+          let itemArray =
+            firstLetter.toUpperCase() + rest.join("").toLowerCase();
+          finalGenres.push(itemArray);
         }
         break;
     }

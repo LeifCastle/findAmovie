@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("../config/ppConfig");
 const { user } = require("../models");
+const isLoggedIn = require("../middleware/isLoggedIn");
 
 router.get("/login", function (req, res) {
   res.render("account/login.ejs");
@@ -54,6 +55,11 @@ router.post(
     failureFlash: "Either email or password is incorrect",
   })
 );
+
+router.get("/profile", isLoggedIn, (req, res) => {
+  const { firstName, lastName, username } = req.user.get();
+  res.render("profile", { firstName, lastName, username });
+});
 
 router.get("/:input", function (req, res) {
   res.render("404", { badLink: req.params.input });

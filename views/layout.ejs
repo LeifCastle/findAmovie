@@ -24,10 +24,15 @@
       <p id="description">Snag the perfect movie...without it taking forever</p>
     </div>
     <div id="accountButtons">
+      <% if (!currentUser) {%>
       <a id="login" class="loginCreate" href="/account/login">Login</a>
       <a id="create" class="loginCreate" href="/account/create"
         >Create Account</a
       >
+      <%}else{%>
+        <a id="profile" class="loginCreate" href="/account/profile"
+        >Profile</a
+      <%}%>
     </div>
   </header>
   <main><%- body %></main>
@@ -36,4 +41,5 @@
 https://cdn.jsdelivr.net/npm/ejs@3.1.9/ejs.min.js
 "></script>
   <script src="../../scripts/questionaire.js" type="module"></script>
+  <script src="../../scripts/results.js" type="module"></script>
 </html>

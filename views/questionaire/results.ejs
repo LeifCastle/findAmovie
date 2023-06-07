@@ -1,8 +1,4 @@
 <link rel="stylesheet" href="/css/results.css" />
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="
-https://cdn.jsdelivr.net/npm/ejs@3.1.9/ejs.min.js
-"></script>
 
 <div id="results">
   <% data.forEach(movie => { %>
@@ -13,12 +9,16 @@ https://cdn.jsdelivr.net/npm/ejs@3.1.9/ejs.min.js
       alt=""
     />
     <div class="cardBody">
-      <p><%= movie.dataValues.popularity %></p>
-      <p><%= movie.dataValues.title %></p>
-      <p>
-        <%= movie.dataValues.release_date %><span id="vert">|</span>Adult: <%=
-        movie.dataValues.adult %>
-      </p>
+      <p class="title"><%= movie.dataValues.title %></p>
+      <% let year = movie.dataValues.release_date.split("").slice(0,4) %>
+      <p><%= year.join("") %></p>
+      <hr width="120px" />
+      <p>Rating: <%= Math.floor(movie.dataValues.popularity) %></p>
+      <% if (currentUser) { %>
+      <button id="<%= movie.dataValues.title %>" class="seenButton">
+        I've Seen This
+      </button>
+      <% } %>
     </div>
   </div>
   <% }); %>

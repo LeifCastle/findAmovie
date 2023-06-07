@@ -4,20 +4,23 @@ const { movie } = require("../models");
 const Sequelize = require("sequelize");
 const { Op } = require("sequelize");
 
-let data = {};
-let parsedParams = {};
 let requestParams = {};
 let filteredMovies;
+
 router.get("/", (req, res) => {
   res.render("questionaire/questionaire");
 });
 
 router.post("/results", (req, res) => {
   requestParams = req.body;
+  console.log(requestParams);
 });
 
 router.get("/results", async (req, res) => {
-  await parseData();
+  //ensure genres has 3 entries for query
+  while (requestParams.genres.length < 4) {
+    requestParams.genres.push("");
+  }
   filteredMovies = await getMovies();
   //console.log(filteredMovies.slice(1, 100));
   res.render("questionaire/results.ejs", {
@@ -25,48 +28,33 @@ router.get("/results", async (req, res) => {
   });
 });
 
-async function parseData() {
-  //console.log(requestParams.genres.length);
-  parsedParams = {
-    genres: [],
-    years: requestParams.years,
-    animation: requestParams.animation,
-  };
-  for (i = 0; i < requestParams.genres.length; i++) {
-    let item = requestParams.genres[i];
-    let [firstLetter, ...rest] = item.split("");
-    let itemArray = firstLetter.toUpperCase() + rest.join("").toLowerCase();
-    parsedParams.genres.push(itemArray);
+router.put("/test", (req, res) => {
+  if (req.body.unseen) {
+    console.log("Unseen: " + req.body.unseen);
+  } else if (req.body.seen) {
+    console.log("Seen: " + req.body.seen);
   }
-  console.log(parsedParams);
-  //ensure parsedData has 3 entries for query
-  while (parsedParams.length < 3) {
-    parsedParams.push("");
-  }
-}
-
-// Create a Sequelize instance with your database configuration
-const sequelize = new Sequelize("moviesnag", "leif", "123", {
-  host: "localhost",
-  dialect: "postgres", // or any other supported dialect
 });
 
-// Define your model and perform operations with Sequelize
+// Create a Sequelize instance with database configuration
+const sequelize = new Sequelize("moviesnag", "leif", "123", {
+  host: "localhost",
+  dialect: "postgres",
+});
 
-// Example query using sequelize.literal
 async function getMovies() {
   foundMovies = await movie.findAll({
     where: {
       [Op.or]: [
-        { genre_1: parsedParams.genres[0] },
-        { genre_1: parsedParams.genres[1] },
-        { genre_1: parsedParams.genres[2] },
-        { genre_2: parsedParams.genres[0] },
-        { genre_2: parsedParams.genres[1] },
-        { genre_2: parsedParams.genres[2] },
-        { genre_3: parsedParams.genres[0] },
-        { genre_3: parsedParams.genres[1] },
-        { genre_3: parsedParams.genres[2] },
+        { genre_1: requestParams.genres[0] },
+        { genre_1: requestParams.genres[1] },
+        { genre_1: requestParams.genres[2] },
+        { genre_2: requestParams.genres[0] },
+        { genre_2: requestParams.genres[1] },
+        { genre_2: requestParams.genres[2] },
+        { genre_3: requestParams.genres[0] },
+        { genre_3: requestParams.genres[1] },
+        { genre_3: requestParams.genres[2] },
       ],
       popularity: {
         [Op.gte]: 20, // Example condition for popularity >= 20
@@ -75,16 +63,14 @@ async function getMovies() {
         sequelize.literal(`release_date <> ''`), // Exclude empty strings
         sequelize.literal(`release_date IS NOT NULL`), // Exclude null values
         sequelize.literal(
-          `CAST(SUBSTRING(release_date, 1, 4) AS INTEGER) > (2023-${parsedParams.years})`
+          `CAST(SUBSTRING(release_date, 1, 4) AS INTEGER) > (2023-${requestParams.years})`
         ), // Year condition
-      ],
-      [Op.and]: [
         sequelize.literal(
-          `CASE WHEN ${parsedParams.animation} THEN genre_1 = 'Animation' ELSE TRUE END`
+          `CASE WHEN ${requestParams.animation} THEN genre_1 = 'Animation' ELSE TRUE END`
         ),
         sequelize.literal(
-          `CASE WHEN ${!parsedParams.animation} THEN genre_1 != 'Animation' ELSE TRUE END`
-        ),
+          `CASE WHEN ${!requestParams.animation} THEN genre_1 != 'Animation' ELSE TRUE END`
+        ), //Animation condition
       ],
     },
     order: [["popularity", "DESC"]],
