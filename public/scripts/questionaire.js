@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
   //-----Global Variables
-  let progress = 1;
+  let progress = 0;
   let cardHistory = ["Audience"];
   let genres = {
     action: "Action",
@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //-----Event Listeners
   $(document).on("click", ".choice", (event) => {
+    event.target.classList.toggle("choiceSelected");
     selectionReq = parseInt(event.target.classList[1]);
     let picked = parseInt(event.target.parentNode.classList[1]);
     selections++; //Total selections on card
@@ -63,8 +64,6 @@ document.addEventListener("DOMContentLoaded", () => {
     runChoice(alter, id.join("").toLowerCase());
     //If all required selections are made go to next card
     if (selections === selectionReq) {
-      progress++;
-      checkProgress();
       runCard(
         event.target.parentNode.parentNode.classList[0],
         id.join("").toLowerCase()
@@ -73,11 +72,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   //--Back Button
   back.addEventListener("click", () => {
+    progress--;
     cardHistory.pop();
     updateCard(cardHistory[cardHistory.length - 1]);
+    progress--;
     //removies the cardHistory pushed by the function
     cardHistory.pop();
-    progress--;
     checkProgress();
   });
 
@@ -197,6 +197,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //-----Card Rendering
   function updateCard(newCard) {
+    progress++;
+    checkProgress();
     selections = 0; //reset multiple choice selection count
     cardHistory.push(newCard.toLowerCase()); //Update card history
     let route = `./cards/${newCard.toLowerCase()}.ejs`;
@@ -258,11 +260,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //--Check to see if back button should be displayed
   function checkProgress() {
-    if (progress === 1) {
+    console.log(progress);
+    if (progress === 0) {
       back.setAttribute("hidden", "hidden");
     } else {
       back.removeAttribute("hidden");
     }
+    $(".progress:lt(" + progress + ")").addClass("progressCompleted");
+    $(
+      ".progress:gt(" + (progress - 1) + "), .progress:eq(" + progress + ")"
+    ).removeClass("progressCompleted");
   }
 
   function finishQuestionaire() {

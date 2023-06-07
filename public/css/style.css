@@ -60,6 +60,7 @@ header {
   grid-auto-columns: minmax(0, 1fr);
   grid-auto-flow: column;
   align-items: center; /* Align items vertically in the center */
+  text-align: center;
 }
 h1 {
   font-size: 49px;
@@ -99,6 +100,7 @@ body {
   color: black; /* blue colors for links too */
   text-decoration: none; /* no underline */
 }
+
 #login {
   display: flex;
   align-items: center;

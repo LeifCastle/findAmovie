@@ -45,19 +45,24 @@ app.use((req, res, next) => {
 });
 
 //------Routes
+
 //Home
 app.get("/", function (req, res) {
   res.render("index.ejs");
 });
+
+app.use("/questionaire", require("./controllers/questionaire.js"));
+app.use("/snagEngine", require("./controllers/snagEngine.js"));
+app.use("/account", require("./controllers/account.js"));
 
 app.get("/profile", isLoggedIn, (req, res) => {
   const { id, username, email } = req.user.get();
   res.render("profile", { id, username, email });
 });
 
-app.use("/questionaire", require("./controllers/questionaire.js"));
-app.use("/snagEngine", require("./controllers/snagEngine.js"));
-app.use("/account", require("./controllers/account.js"));
+app.get("/:input", function (req, res) {
+  res.render("404", { badLink: req.params.input });
+});
 
 //------Setup
 //Server

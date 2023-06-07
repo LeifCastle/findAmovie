@@ -1,6 +1,7 @@
+<div></div>
 <div class="genreChoice card">
-  <p>Select the genre's (if any) you're not intrested in watching</p>
-  <div class="pick4">
+  <p>Which genres are you NOT intrested in watching</p>
+  <div class="pickX">
     <button id="r<%=tempGenres.Genre1%>" class="choice">
       <%=tempGenres.Genre1%>
     </button>
@@ -14,9 +15,11 @@
       <%=tempGenres.Genre4%>
     </button>
   </div>
-  <hr />
-  <p>Select the genre's (if any) you're intrested in watching</p>
-  <div class="pick4">
+  <div id="space"></div>
+  <div id="space"></div>
+  <div id="space"></div>
+  <p>Which genres are you interested in watching</p>
+  <div class="pickX">
     <button id="a<%=tempGenres.Genre5%>" class="choice">
       <%=tempGenres.Genre5%>
     </button>
@@ -30,5 +33,12 @@
       <%=tempGenres.Genre8%>
     </button>
   </div>
-  <button id="genreChoice" class="done">Next</button>
 </div>
+<img
+  id="genreChoice"
+  class="done"
+  src="../images/next.png"
+  alt="next"
+  width="50px"
+  height="50px"
+/>

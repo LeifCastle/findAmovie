@@ -55,4 +55,8 @@ router.post(
   })
 );
 
+router.get("/:input", function (req, res) {
+  res.render("404", { badLink: req.params.input });
+});
+
 module.exports = router;
