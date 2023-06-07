@@ -4,16 +4,36 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MovieSnag</title>
     <link href="/css/style.css" rel="stylesheet" />
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@1&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/questionaire.css" />
+    <link rel="stylesheet" href="../../public/scripts/account.js" />
   </head>
   <header>
-    <div id="headerContent">
-      <h1>Movie Snag</h1>
-      <p>Find the perfect movie to watch...without taking forever</p>
+    <div>
+      <a id="home" class="loginCreate" href="/">Home</a>
     </div>
-    <a id="loginCreate" href="/login_or_create">Login/Create Account</a>
-    <hr />
+    <div id="pageTitle">
+      <h1>Movie Snag</h1>
+      <p id="description">Snag the perfect movie...without it taking forever</p>
+    </div>
+    <div id="accountButtons">
+      <a id="login" class="loginCreate" href="/account/login">Login</a>
+      <a id="create" class="loginCreate" href="/account/create"
+        >Create Account</a
+      >
+    </div>
   </header>
   <main><%- body %></main>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="
+https://cdn.jsdelivr.net/npm/ejs@3.1.9/ejs.min.js
+"></script>
+  <script src="../../scripts/questionaire.js" type="module"></script>
 </html>

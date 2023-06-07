@@ -1,5 +1,4 @@
 body {
-  background-color: rgb(178, 215, 248);
   text-align: center;
 }
 #body {
@@ -7,6 +6,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  color: white;
 }
 .firstThen {
   font-size: 20px;
@@ -17,7 +17,7 @@ body {
   font-size: 20px;
   border: none;
   border-radius: 4px;
-  background-color: rgb(133, 132, 132);
+  background-color: rgb(151, 154, 239);
   padding: 15px 32px;
   text-align: center;
   text-decoration: none;

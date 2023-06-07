@@ -7,6 +7,8 @@
     "password": "123"
   },
   "test": {
+    "username": "leif",
+    "password": "123",
     "database": "userapp_test",
     "host": "127.0.0.1",
     "dialect": "postgres"

@@ -92,29 +92,6 @@ async function getMovies() {
   return foundMovies;
 }
 
-// async function getMovies() {
-//   let foundMovies;
-//   try {
-//     foundMovies = await movie.findAll({
-//       where: {
-//         [Op.or]: [
-//           { genre_1: parsedParams.genres[0] },
-//           { genre_1: parsedParams.genres[1] },
-//           { genre_1: parsedParams.genres[2] },
-//         ],
-//         popularity: {
-//           [Op.gte]: 20, // Example condition for popularity >= 20
-//         },
-//         [Op.and]: [sequelize.literal('genre_1 = "Action"')],
-//       },
-//       order: [["popularity", "DESC"]],
-//     });
-//   } catch (error) {
-//     console.error("Error searching for movies:", error);
-//   }
-//   return foundMovies;
-// }
-
 module.exports = router;
 
 // `SELECT title FROM movies
