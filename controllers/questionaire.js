@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { user, movie, seenMovie } = require("../models");
+const { user, movie, usersSeenMovies } = require("../models");
 const Sequelize = require("sequelize");
 const { Op } = require("sequelize");
 
@@ -31,27 +31,45 @@ router.get("/results", async (req, res) => {
 router.put("/test", (req, res) => {
   if (!req.body.seen) {
     console.log("Unseen: " + req.body.title);
+    user
+      .findOne({
+        where: { username: res.locals.currentUser.username },
+      })
+      .then((user) => {
+        usersSeenMovies
+          .destroy({
+            where: {
+              movieId: req.body.id,
+              userId: user.id,
+            },
+          })
+          .then((numRowsDeleted) => {
+            console.log(
+              numRowsDeleted,
+              `seen movie deleted: ${req.body.title}`
+            );
+          });
+      });
   } else if (req.body.seen) {
     console.log("Seen: " + req.body.title);
     // First, get a reference to a movie.
-    seenMovie
-      .findOrCreate({
-        where: {
-          movieId: req.body.id,
-          title: req.body.title,
-        },
+    user
+      .findOne({
+        where: { username: res.locals.currentUser.username },
       })
-      .then(function ([seenMovie, created]) {
+      .then(function (user) {
         // Second, get a reference to a user.
-        user
+        movie
           .findOne({
-            where: { username: res.locals.currentUser.username },
+            where: {
+              id: parseInt(req.body.id),
+            },
           })
-          .then(function (user) {
+          .then(function (movie) {
             // Finally, use the "addModel" method to attach one model to another model.
-            seenMovie.addUser(user).then(function (relationInfo) {
+            user.addMovie(movie).then(function (relationInfo) {
               console.log(
-                seenMovie.title,
+                movie.title,
                 " added to ",
                 user.username,
                 "'s list of seen movies"

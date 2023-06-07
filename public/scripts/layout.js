@@ -1,0 +1,1 @@
+console.log("Result: " + result);

@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      models.user.belongsToMany(models.seenMovie, {
+      models.user.belongsToMany(models.movie, {
         through: "usersSeenMovies",
       });
     }

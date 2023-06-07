@@ -8,7 +8,9 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      models.movie.belongsToMany(models.user, {
+        through: "usersSeenMovies",
+      });
     }
   }
   movie.init(
