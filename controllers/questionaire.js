@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { movie } = require("../models");
+const { user, movie, seenMovie } = require("../models");
 const Sequelize = require("sequelize");
 const { Op } = require("sequelize");
 
@@ -29,10 +29,36 @@ router.get("/results", async (req, res) => {
 });
 
 router.put("/test", (req, res) => {
-  if (req.body.unseen) {
-    console.log("Unseen: " + req.body.unseen);
+  if (!req.body.seen) {
+    console.log("Unseen: " + req.body.title);
   } else if (req.body.seen) {
-    console.log("Seen: " + req.body.seen);
+    console.log("Seen: " + req.body.title);
+    // First, get a reference to a movie.
+    seenMovie
+      .findOrCreate({
+        where: {
+          movieId: req.body.id,
+          title: req.body.title,
+        },
+      })
+      .then(function ([seenMovie, created]) {
+        // Second, get a reference to a user.
+        user
+          .findOne({
+            where: { username: res.locals.currentUser.username },
+          })
+          .then(function (user) {
+            // Finally, use the "addModel" method to attach one model to another model.
+            seenMovie.addUser(user).then(function (relationInfo) {
+              console.log(
+                seenMovie.title,
+                " added to ",
+                user.username,
+                "'s list of seen movies"
+              );
+            });
+          });
+      });
   }
 });
 

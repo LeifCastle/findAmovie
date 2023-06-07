@@ -1,7 +1,13 @@
 $(document).on("click", ".seenButton", (event) => {
-  let movieUpdate = {};
+  let data = $(event.target).attr("id");
+  let [id, title] = data.split(",");
+  let movieUpdate = {
+    id: id,
+    title: title,
+  };
+  console.l;
   if ($(event.target).text() === "Undo") {
-    movieUpdate.unseen = $(event.target).attr("id");
+    movieUpdate.seen = false;
     $(event.target).parent().next().remove();
     $(event.target).text("I've seen this");
     fetch("/questionaire/test", {
@@ -22,10 +28,11 @@ $(document).on("click", ".seenButton", (event) => {
         // Handle any errors that occurred during the request
       });
   } else {
-    movieUpdate.seen = $(event.target).attr("id");
+    movieUpdate.seen = true;
     let overlay = $("<div></div>").addClass("seen");
     $(event.target).parent().parent().append(overlay);
     $(event.target).text("Undo");
+    console.log(movieUpdate);
     fetch("/questionaire/test", {
       method: "PUT",
       headers: {

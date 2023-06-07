@@ -15,7 +15,10 @@
       <hr width="120px" />
       <p>Rating: <%= Math.floor(movie.dataValues.popularity) %></p>
       <% if (currentUser) { %>
-      <button id="<%= movie.dataValues.title %>" class="seenButton">
+      <button
+        id="<%= movie.dataValues.id %>,<%= movie.dataValues.title %>"
+        class="seenButton"
+      >
         I've Seen This
       </button>
       <% } %>
