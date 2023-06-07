@@ -117,7 +117,8 @@ document.addEventListener("DOMContentLoaded", () => {
             (keep[0] ? tempGenres[`Genre${z}`] != keep[0] : true) &&
             (keep[1] ? tempGenres[`Genre${z}`] != keep[1] : true) &&
             (keep[2] ? tempGenres[`Genre${z}`] != keep[2] : true) &&
-            (keep[3] ? tempGenres[`Genre${z}`] != keep[3] : true)
+            (keep[3] ? tempGenres[`Genre${z}`] != keep[3] : true) &&
+            tempGenres[`Genre${z}`]
           ) {
             //need to update to include history for back button
             delete genres[tempGenres[`Genre${z}`].toLowerCase()];

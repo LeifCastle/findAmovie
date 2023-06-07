@@ -61,6 +61,12 @@ header {
   grid-auto-flow: column;
   align-items: center; /* Align items vertically in the center */
   text-align: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+#body {
+  margin-top: 110px;
 }
 h1 {
   font-size: 49px;
@@ -120,4 +126,5 @@ body {
   height: 300px;
   color: black;
   background-color: aliceblue;
+  margin-top: 110px;
 }

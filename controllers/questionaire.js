@@ -100,23 +100,38 @@ const sequelize = new Sequelize("moviesnag", "leif", "123", {
 });
 
 async function getMovies(seenMovieArray) {
-  console.log("SEEEDGEWG", seenMovieArray);
   foundMovies = await movie.findAll({
     where: {
-      [Op.or]: [
-        { genre_1: requestParams.genres[0] },
-        { genre_1: requestParams.genres[1] },
-        { genre_1: requestParams.genres[2] },
-        { genre_2: requestParams.genres[0] },
-        { genre_2: requestParams.genres[1] },
-        { genre_2: requestParams.genres[2] },
-        { genre_3: requestParams.genres[0] },
-        { genre_3: requestParams.genres[1] },
-        { genre_3: requestParams.genres[2] },
-      ],
       popularity: {
         [Op.gte]: 20, // Example condition for popularity >= 20
       },
+      [Op.or]: [
+        sequelize.literal(
+          requestParams.genres[0]
+            ? `genre_1 IN ('${requestParams.genres.join("','")}')`
+            : "TRUE"
+        ), //Genre_1 condition
+        sequelize.literal(
+          requestParams.genres[0]
+            ? `genre_2 IN ('${requestParams.genres.join("','")}')`
+            : "TRUE"
+        ), //Genre_2 condition
+        sequelize.literal(
+          requestParams.genres[0]
+            ? `genre_3 IN ('${requestParams.genres.join("','")}')`
+            : "TRUE"
+        ), //Genre_3 condition
+        sequelize.literal(
+          requestParams.genres[0]
+            ? `genre_4 IN ('${requestParams.genres.join("','")}')`
+            : "TRUE"
+        ), //Genre_4 condition
+        sequelize.literal(
+          requestParams.genres[0]
+            ? `genre_5 IN ('${requestParams.genres.join("','")}')`
+            : "TRUE"
+        ), //Genre_5 condition
+      ],
       [Op.and]: [
         sequelize.literal(`release_date <> ''`), // Exclude empty strings
         sequelize.literal(`release_date IS NOT NULL`), // Exclude null values
