@@ -1,14 +1,19 @@
 main {
-  background-color: rgba(167, 175, 208, 1);
-  height: 80vh;
-  display: block;
-  margin-top: 120px;
+  background-color: rgba(29, 37, 75, 1);
+  height: 100vh;
+  display: flex;
+  margin-top: 105px;
   padding-top: 0px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  color: white;
 }
 #seenMovies {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  gap: 10px;
 }
 .moviePoster {
   width: 120px;
@@ -20,4 +25,28 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+}
+#profileHeader {
+  background-color: black;
+  color: white;
+  width: 100vw;
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+#profileOptions div p {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  color: white;
 }

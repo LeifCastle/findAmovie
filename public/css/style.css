@@ -1,5 +1,5 @@
 a {
-  color: black; /* blue colors for links too */
+  color: black;
   text-decoration: none; /* no underline */
 }
 .pageHeader {
@@ -173,6 +173,7 @@ body {
   height: 350px;
 }
 
+/* Used to align input fields */
 #smallSpace {
   font-size: 10px;
 }

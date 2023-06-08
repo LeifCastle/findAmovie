@@ -5,11 +5,13 @@ $(document).on("click", ".seenButton", (event) => {
     id: id,
     title: title,
   };
-  console.l;
-  if ($(event.target).text() === "Undo") {
+  if (
+    $(event.target).text() === "Undo" ||
+    $(event.target).text().trim() === "Remove"
+  ) {
     movieUpdate.seen = false;
     $(event.target).parent().next().remove();
-    $(event.target).text("I've seen this");
+    $(event.target).text("I've Seen This");
     fetch("/questionaire/test", {
       method: "PUT",
       headers: {
@@ -27,11 +29,15 @@ $(document).on("click", ".seenButton", (event) => {
         console.error(error);
         // Handle any errors that occurred during the request
       });
-  } else {
+  } else if ($(event.target).text().trim() === "I've Seen This") {
     movieUpdate.seen = true;
     let overlay = $("<div></div>").addClass("seen");
     $(event.target).parent().parent().append(overlay);
-    $(event.target).text("Undo");
+    if ($(event.target).parent().parent().attr("id") === "seenMovies") {
+      $(event.target).text("Remove");
+    } else {
+      $(event.target).text("Undo");
+    }
     console.log(movieUpdate);
     fetch("/questionaire/test", {
       method: "PUT",

@@ -8,6 +8,16 @@ router.get("/login", function (req, res) {
   res.render("account/login.ejs");
 });
 
+router.get("/logout", (req, res) => {
+  req.logOut(function (err, next) {
+    if (err) {
+      return next(err);
+    }
+    req.flash("success", "Logging out... See you next time!");
+    res.redirect("/");
+  }); // logs the user out of the session
+});
+
 router.get("/create", function (req, res) {
   res.render("account/create.ejs");
 });
@@ -67,6 +77,7 @@ router.get("/profile", isLoggedIn, async (req, res) => {
           movies.forEach((movie) => {
             console.log("Title: ", movie.title);
             seenMovies.push({
+              id: movie.id,
               title: movie.title,
               posterImage: `https://image.tmdb.org/t/p/original/${movie.poster_path}`,
             });
