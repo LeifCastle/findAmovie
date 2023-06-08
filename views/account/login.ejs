@@ -1,10 +1,26 @@
-<div class="accountModule">
-  <form action="/account/login" method="POST">
-    <h2>Login</h2>
-    <label for="username">Username: </label>
-    <input id="username" type="text" name="username" />
-    <label for="password">Password: </label>
-    <input id="password" type="password" name="password" />
-    <button type="submit">Login</button>
-  </form>
-</div>
+<form
+  id="loginModule"
+  class="accountModule"
+  action="/account/login"
+  method="POST"
+>
+  <h2 class="accountTitle">Login To Your Account</h2>
+  <div id="accountBody">
+    <div>
+      <div class="accountFields">
+        <label class="fieldLabel" for="username">Username: </label>
+        <input class="accountInput" id="username" type="text" name="username" />
+      </div>
+      <div class="accountFields">
+        <label class="fieldLabel" for="password">Password: </label>
+        <input
+          class="accountInput"
+          id="password"
+          type="password"
+          name="password"
+        />
+      </div>
+    </div>
+    <button class="loginCreate" type="submit">Login</button>
+  </div>
+</form>

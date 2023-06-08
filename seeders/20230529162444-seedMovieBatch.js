@@ -4,7 +4,7 @@ require("dotenv").config();
 const axios = require("axios");
 const movieIds = require("../src/processedDailyExports.json");
 
-const apiKey = "f95c55e2a9a5625ec1d3b5c42e143840"; //process.env.TMDB_API_KEY;
+const apiKey = TMDB_API_KEY;
 const baseURL = "https://api.themoviedb.org/3/movie/";
 const append = "append_to_response=videos,images";
 

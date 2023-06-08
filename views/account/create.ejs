@@ -1,13 +1,46 @@
-<div class="accountModule">
-  <form action="/account/create" method="POST">
-    <label for="firstname">First Name: </label>
-    <input id="firstname" name="firstName" type="text" />
-    <label for="lastname">Last Name: </label>
-    <input id="lastname" name="lastName" type="text" />
-    <label for="username">Username: </label>
-    <input id="username" name="username" type="text" />
-    <label for="password">Password: </label>
-    <input id="password" name="password" type="password" />
-    <button class="create" type="submit">Create</button>
-  </form>
-</div>
+<form
+  id="createModule"
+  class="accountModule"
+  action="/account/create"
+  method="POST"
+>
+  <h2 class="accountTitle">Create An Account</h2>
+  <div id="accountBody">
+    <div>
+      <div class="accountFields">
+        <label class="fieldLabel" for="firstName">First Name: </label>
+        <input
+          width="200px;"
+          class="accountInput"
+          id="firstName"
+          type="text"
+          name="firstName"
+        />
+      </div>
+      <div class="accountFields">
+        <label class="fieldLabel" for="lastNname"
+          >Last Name: <span class="spaceHidden" id="smallSpace">. </span></label
+        >
+        <input class="accountInput" id="lastName" type="text" name="lastName" />
+      </div>
+      <div class="accountFields">
+        <label class="fieldLabel" for="username"
+          >Username: <span class="spaceHidden">s </span></label
+        >
+        <input class="accountInput" id="username" type="text" name="username" />
+      </div>
+      <div class="accountFields">
+        <label class="fieldLabel" for="password"
+          >Password: <span class="spaceHidden">s </span></label
+        >
+        <input
+          class="accountInput"
+          id="password"
+          type="password"
+          name="password"
+        />
+      </div>
+    </div>
+    <button class="loginCreate" type="submit">Create</button>
+  </div>
+</form>

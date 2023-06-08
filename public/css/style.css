@@ -73,7 +73,7 @@ h1 {
   font-weight: 700;
   font-family: "Roboto Mono", monospace;
 }
-#description {
+.description {
   font-family: "Roboto Mono", monospace;
 }
 #pageTitle {
@@ -85,6 +85,7 @@ h1 {
 body {
   background-image: url("https://static.vecteezy.com/system/resources/previews/001/846/926/large_2x/dark-purple-backdrop-with-bent-lines-vector.jpg");
   background-size: cover;
+  overflow: hidden;
 }
 #accountButtons {
   justify-self: right;
@@ -122,9 +123,60 @@ body {
 }
 
 .accountModule {
-  width: 400pc;
-  height: 300px;
-  color: black;
-  background-color: aliceblue;
-  margin-top: 110px;
+  width: 600px;
+  height: 200px;
+  background-color: rgba(167, 175, 208, 80%);
+  margin-top: 210px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+#accountBody {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.accountFields {
+  margin: 10px;
+}
+
+.accountInput {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+  font-size: 17px;
+  transition: border-color 0.3s ease;
+  height: 13px;
+}
+
+.accountInput:focus {
+  border-color: #007bff;
+}
+
+.fieldLabel {
+  font-size: 20px;
+  font-family: "Roboto Mono", monospace;
+}
+
+.accountTitle {
+  font-size: 25px;
+  font-weight: 700;
+  font-family: "Roboto Mono", monospace;
+}
+#createModule {
+  height: 350px;
+}
+
+#smallSpace {
+  font-size: 10px;
+}
+
+.spaceHidden {
+  color: rgba(0, 0, 0, 00%);
 }
