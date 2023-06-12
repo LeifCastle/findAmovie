@@ -32,11 +32,12 @@ $(document).on("click", ".seenButton", (event) => {
   } else if ($(event.target).text().trim() === "I've Seen This") {
     movieUpdate.seen = true;
     let overlay = $("<div></div>").addClass("seen");
-    $(event.target).parent().parent().append(overlay);
     if ($(event.target).parent().parent().attr("id") === "seenMovies") {
       $(event.target).text("Remove");
+      //$(event.target).parent().append(overlay);
     } else {
       $(event.target).text("Undo");
+      $(event.target).parent().parent().append(overlay);
     }
     console.log(movieUpdate);
     fetch("/questionaire/test", {

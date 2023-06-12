@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "node index.js",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "tailwind": "npx tailwindcss -i ./public/css/style.css -o ./public/css/tailwind.css --watch"
   },
   "author": "Leif Castle",
   "license": "ISC",
@@ -33,6 +34,7 @@
     "sequelize": "^6.32.0"
   },
   "devDependencies": {
-    "sequelize-cli": "^6.6.0"
+    "sequelize-cli": "^6.6.1",
+    "tailwindcss": "^3.3.2"
   }
 }

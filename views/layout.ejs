@@ -5,36 +5,63 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MovieSnag</title>
-    <link href="/css/style.css" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="/css/tailwind.css" rel="stylesheet" />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital@1&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/css/questionaire.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Palanquin:wght@300&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <header>
-    <div>
-      <a id="home" class="loginCreate" href="/">Home</a>
+  <header class="flex items-center h-20 bg-header text-white">
+    <div class="basis-40">
+      <a
+        href="/"
+        class="flex justify-center bg-button1 hover:bg-button1Hover text-white font-palanquin w-20 h-7 rounded-xl text-center mx-4"
+        >Home</a
+      >
     </div>
-    <div id="pageTitle">
-      <h1>Movie Snag</h1>
-      <p class="description">Snag the perfect movie...without it taking forever</p>
+    <div class="grow flex flex-col text-center">
+      <h1 class="font-palanquin text-headerTitle text-4xl font-bold my-2">
+        Movie Snag
+      </h1>
+      <p class="font-robo text-sm">
+        Snag the perfect movie...without it taking forever
+      </p>
     </div>
-    <div id="accountButtons">
+    <div
+      class="basis-40 flex flex-col font-palanquin items-center justify-center !important"
+    >
       <% if (!currentUser) {%>
-      <a id="login" class="loginCreate" href="/account/login">Login</a>
-      <a id="create" class="loginCreate" href="/account/create"
+      <a
+        class="flex-none bg-button1 text-white w-20 h-15 rounded-xl text-center my-1 mx-4"
+        href="/account/login"
+        >Login</a
+      >
+      <a
+        class="flex-none bg-button1 text-white w-28 h-7 rounded-xl text-center my-1 mx-4"
+        id="create"
+        href="/account/create"
         >Create Account</a
       >
       <%}else{%>
-        <a id="profile" class="loginCreate" href="/account/profile"
+      <a
+        class="flex-none bg-button1 text-white w-28 h-7 rounded-xl text-center mx-4"
+        id="profile"
+        class="loginCreate"
+        href="/account/profile"
         >Profile</a
+      >
       <%}%>
     </div>
   </header>
-  <main><%- body %></main>
+  <main
+    class="bg-gradient-to-b from-test to-background1 h-[calc(100vh-80px)] text-black"
+  >
+    <%- body %>
+  </main>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="
 https://cdn.jsdelivr.net/npm/ejs@3.1.9/ejs.min.js
